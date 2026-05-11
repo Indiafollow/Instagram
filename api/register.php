@@ -10,12 +10,14 @@ if ($name === '' || $username === '' || strlen($password) < 6) json_response(fal
 foreach ($users as $u) {
     if (strtolower($u['username']) === strtolower($username)) json_response(false, null, 'Username already exists', 409);
 }
+$isFirstUser = count($users) === 0;
 $user = [
     'id' => next_id($users),
     'name' => $name,
     'username' => $username,
     'password_hash' => password_hash($password, PASSWORD_DEFAULT),
-    'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($name)
+    'avatar' => 'https://ui-avatars.com/api/?name=' . urlencode($name),
+    'role' => $isFirstUser ? 'admin' : 'user'
 ];
 $users[] = $user;
 write_json($usersPath, $users);
