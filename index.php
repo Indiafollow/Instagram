@@ -10,12 +10,12 @@ if (isset($_SESSION['user_id'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instagram Chat - Login</title>
+  <title>ChatterBox - Login</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="auth-body">
   <div class="auth-card">
-    <h1>Instagram Chat</h1>
+    <h1>ChatterBox</h1>
     <form id="loginForm">
       <input type="text" name="username" placeholder="Username" required />
       <input type="password" name="password" placeholder="Password" required />

@@ -15,13 +15,13 @@ foreach ($users as $u) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instagram Messages</title>
+  <title>ChatterBox Messages</title>
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <div class="brand">Instagram</div>
+      <div class="brand">ChatterBox</div>
       <div class="me-row">
         <img class="avatar" src="<?= htmlspecialchars($me['avatar']) ?>" alt="avatar" />
         <div>
