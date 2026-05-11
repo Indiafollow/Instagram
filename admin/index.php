@@ -14,4 +14,6 @@ $messages=(int)db()->query('SELECT COUNT(*) c FROM messages')->fetch()['c'];
 <div class="card"><h3>Admin Powers</h3><p>Promote/demote users, suspend/reactivate, wipe messages.</p><form method="post" action="users.php"><input name="user_id" placeholder="User ID" required><select name="action"><option value="promote">Promote to moderator</option><option value="demote">Demote to user</option><option value="suspend">Suspend</option><option value="activate">Activate</option></select><button>Apply</button></form></div>
 </div>
 <div class="card"><h3>Users</h3><ul><?php foreach($users as $u):?><li>#<?=$u['id']?> <?=htmlspecialchars($u['username'])?> | <?=$u['role']?> | <?=$u['status']?></li><?php endforeach;?></ul></div>
-<a class="logout" href="../home.php">Back to user panel</a></div></body></html>
+<a class="logout" href="../home.php">Back to user panel</a></div>
+<footer class="app-footer">App developed by <strong>Luv</strong> &amp; <strong>Manveer</strong></footer>
+</body></html>

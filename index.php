@@ -16,4 +16,6 @@ if (isset($_SESSION['user_id'])) {
 <div class="auth-card"><h1><?= htmlspecialchars($settings['app_name']) ?></h1>
 <form id="loginForm"><input type="text" name="username" placeholder="Username" required /><input type="password" name="password" placeholder="Password" required /><button type="submit">Log in</button><p id="loginError" class="error"></p></form>
 <p>No account? <a href="register.php">Sign up</a></p></div>
-<script src="assets/js/auth.js"></script></body></html>
+<script src="assets/js/auth.js"></script>
+<footer class="app-footer">App developed by <strong>Luv</strong> &amp; <strong>Manveer</strong></footer>
+</body></html>

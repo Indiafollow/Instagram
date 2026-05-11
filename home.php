@@ -38,4 +38,6 @@ $st=db()->prepare('SELECT id,name,username,avatar,role FROM users WHERE id=?');$
 <a class="logout-fab" href="logout.php">Logout</a>
 <script>window.ME_ID = <?= (int)$_SESSION['user_id'] ?>;</script>
 <script src="assets/js/chat.js"></script>
+
+<footer class="app-footer">App developed by <strong>Luv</strong> &amp; <strong>Manveer</strong></footer>
 </body></html>

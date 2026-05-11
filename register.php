@@ -13,4 +13,6 @@ if (isset($_SESSION['user_id'])) { header('Location: home.php'); exit; }
 <h1>Create Account</h1><form id="registerForm"><input type="text" name="name" placeholder="Full name" required />
 <input type="text" name="username" placeholder="Username" required /><input type="password" name="password" placeholder="Password" required minlength="6" />
 <button type="submit">Sign up</button><p id="registerError" class="error"></p></form><p>Have an account? <a href="index.php">Log in</a></p>
-</div><script src="assets/js/auth.js"></script></body></html>
+</div><script src="assets/js/auth.js"></script>
+<footer class="app-footer">App developed by <strong>Luv</strong> &amp; <strong>Manveer</strong></footer>
+</body></html>
