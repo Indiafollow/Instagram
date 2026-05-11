@@ -1,15 +1,14 @@
 <?php
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/db.php';
 
 function get_theme_settings() {
-    $defaults = [
-        'app_name' => 'socialTeam',
-        'theme' => 'sunset'
-    ];
-    $path = __DIR__ . '/../data/settings.json';
-    $settings = read_json($path);
-    if (!is_array($settings)) return $defaults;
-    return array_merge($defaults, $settings);
+    try {
+        $st = db()->query('SELECT app_name, theme FROM settings WHERE id=1');
+        $row = $st->fetch();
+        if ($row) return $row;
+    } catch (Throwable $e) {
+    }
+    return ['app_name' => 'socialTeam', 'theme' => 'sunset'];
 }
 
 function theme_css_vars($theme) {

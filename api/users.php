@@ -1,46 +1,13 @@
 <?php
 session_start();
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/db.php';
 if (!isset($_SESSION['user_id'])) json_response(false, null, 'Unauthorized', 401);
-
-$uid = (int)$_SESSION['user_id'];
-$users = read_json(__DIR__ . '/../data/users.json');
-$messages = read_json(__DIR__ . '/../data/messages.json');
-
-$map = [];
-foreach ($users as $u) {
-    if ($u['id'] === $uid) continue;
-    $map[$u['id']] = [
-        'id' => $u['id'],
-        'name' => $u['name'],
-        'username' => $u['username'],
-        'avatar' => $u['avatar'],
-        'last_text' => '',
-        'last_time' => null,
-        'unread' => 0
-    ];
-}
-
-foreach ($messages as $m) {
-    $peer = null;
-    if ($m['from'] === $uid) $peer = $m['to'];
-    if ($m['to'] === $uid) $peer = $m['from'];
-    if (!$peer || !isset($map[$peer])) continue;
-
-    if ($map[$peer]['last_time'] === null || strtotime($m['time']) > strtotime($map[$peer]['last_time'])) {
-        $map[$peer]['last_text'] = $m['text'];
-        $map[$peer]['last_time'] = $m['time'];
-    }
-
-    if ($m['to'] === $uid && empty($m['seen'])) $map[$peer]['unread']++;
-}
-
-$list = array_values($map);
-usort($list, function ($a, $b) {
-    if ($a['last_time'] === $b['last_time']) return strcmp($a['name'], $b['name']);
-    if ($a['last_time'] === null) return 1;
-    if ($b['last_time'] === null) return -1;
-    return strtotime($b['last_time']) - strtotime($a['last_time']);
-});
-
-json_response(true, $list);
+$uid=(int)$_SESSION['user_id'];
+$sql="SELECT u.id,u.name,u.username,u.avatar,
+(SELECT m.body FROM messages m WHERE (m.sender_id=u.id AND m.receiver_id=?) OR (m.sender_id=? AND m.receiver_id=u.id) ORDER BY m.id DESC LIMIT 1) last_text,
+(SELECT m.created_at FROM messages m WHERE (m.sender_id=u.id AND m.receiver_id=?) OR (m.sender_id=? AND m.receiver_id=u.id) ORDER BY m.id DESC LIMIT 1) last_time,
+(SELECT COUNT(*) FROM messages m WHERE m.sender_id=u.id AND m.receiver_id=? AND m.seen=0) unread
+FROM users u WHERE u.id<>? AND u.status='active' ORDER BY last_time DESC";
+$st=db()->prepare($sql);$st->execute([$uid,$uid,$uid,$uid,$uid,$uid]);
+json_response(true,$st->fetchAll());
